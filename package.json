@@ -1,0 +1,77 @@
+{
+  "name": "claude-session-dot",
+  "displayName": "Claude Session Status",
+  "description": "Shows a green dot next to Claude Code sessions that need your attention",
+  "version": "1.0.1",
+  "publisher": "adarsh",
+  "author": "Adarsh Shankar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Adarsh350/claude-session-dot.git"
+  },
+  "keywords": ["claude", "claude-code", "sessions", "hooks", "status"],
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "claude-sessions",
+          "title": "Claude Sessions",
+          "icon": "$(comment-discussion)"
+        }
+      ]
+    },
+    "views": {
+      "claude-sessions": [
+        {
+          "id": "claudeSessionStatus",
+          "name": "Session Status"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "claudeSessionStatus.removeSession",
+        "title": "Remove Session",
+        "icon": "$(close)"
+      },
+      {
+        "command": "claudeSessionStatus.clearAll",
+        "title": "Clear All Sessions",
+        "icon": "$(clear-all)"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "claudeSessionStatus.removeSession",
+          "when": "view == claudeSessionStatus",
+          "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "claudeSessionStatus.clearAll",
+          "when": "view == claudeSessionStatus",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "test": "node --test test/session-status.test.js",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.19.0"
+  }
+}
